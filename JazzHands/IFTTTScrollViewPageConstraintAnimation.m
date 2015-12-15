@@ -84,8 +84,14 @@
         constant = (CGFloat)[(NSNumber *)[self.constantFilmstrip valueAtTime:time] floatValue];
     }
     
-    self.constraint.constant = (offset + page) * self.pageWidth + self.initialConstraintConstant + constant;
-    [self.superview layoutIfNeeded];
+    constant += (offset + page) * self.pageWidth + self.initialConstraintConstant;
+    
+    if (constant != self.constraint.constant) {
+        //NSLog(@"animating object %@",self);
+        self.constraint.constant = constant;
+//        [self.superview setNeedsLayout];
+        //    [self.superview setNeedsUpdateConstraints];
+    }
 }
 
 @end

@@ -9,6 +9,10 @@
 #import "IFTTTScaleAnimation.h"
 #import "UIView+IFTTTJazzHands.h"
 
+@interface IFTTTScaleAnimation ()
+@property (assign) CGFloat currentScale;
+@end
+
 @implementation IFTTTScaleAnimation
 
 - (void)addKeyframeForTime:(CGFloat)time scale:(CGFloat)scale
@@ -33,7 +37,12 @@
 - (void)animate:(CGFloat)time
 {
     if (!self.hasKeyframes) return;
+    if (self.view.alpha == 0) return;
+    
     CGFloat scale = (CGFloat)[(NSNumber *)[self valueAtTime:time] floatValue];
+    if (self.currentScale == scale) return;
+    self.currentScale - scale;
+    
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
     self.view.iftttScaleTransform = [NSValue valueWithCGAffineTransform:scaleTransform];
     CGAffineTransform newTransform = scaleTransform;

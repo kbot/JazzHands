@@ -14,3 +14,7 @@
 - (void)addKeyframeForTime:(CGFloat)time translation:(CGPoint)translation withEasingFunction:(IFTTTEasingFunction)easingFunction;
 
 @end
+
+@interface IFTTTBasicTranslationAnimation : IFTTTTranslationAnimation <IFTTTAnimatable>
+
+@end
