@@ -18,7 +18,7 @@
 
 + (instancetype)animationWithView:(UIView *)view
 {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0) {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
         return [[self alloc] initWithView:view];
     }
     else {
