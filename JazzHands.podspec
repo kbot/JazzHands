@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                      'Laura Skelton' => 'laura@ifttt.com' 
                    }
   s.source       = { :git => 'https://github.com/IFTTT/JazzHands.git', :tag => s.version.to_s }
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '6.0'
   s.requires_arc = true
   s.license      = {
     :type => 'MIT',
