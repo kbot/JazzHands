@@ -11,9 +11,20 @@
 
 @interface IFTTTScaleAnimation ()
 @property (assign) CGFloat currentScale;
+@property (assign) CGRect originalFrame;
 @end
 
 @implementation IFTTTScaleAnimation
+
++ (instancetype)animationWithView:(UIView *)view
+{
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        return [[self alloc] initWithView:view];
+    }
+    else {
+        return [[IFTTTBasicScaleAnimation alloc] initWithView:view];
+    }
+}
 
 - (void)addKeyframeForTime:(CGFloat)time scale:(CGFloat)scale
 {
@@ -41,7 +52,7 @@
     
     CGFloat scale = (CGFloat)[(NSNumber *)[self valueAtTime:time] floatValue];
     if (self.currentScale == scale) return;
-    self.currentScale - scale;
+    self.currentScale = scale;
     
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
     self.view.iftttScaleTransform = [NSValue valueWithCGAffineTransform:scaleTransform];
@@ -54,5 +65,26 @@
     }
     self.view.transform = newTransform;
 }
+
+@end
+
+@implementation IFTTTBasicScaleAnimation
+
+- (void)animate:(CGFloat)time
+{
+    if (!self.hasKeyframes) return;
+    if (self.view.alpha == 0) return;
+    
+    CGFloat scale = (CGFloat)[(NSNumber *)[self valueAtTime:time] floatValue];
+    if (self.currentScale == scale) return;
+    self.currentScale = scale;
+    if (CGRectIsEmpty(self.originalFrame)) {
+        self.originalFrame = self.view.frame;
+    }
+    
+    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
+    self.view.frame = CGRectApplyAffineTransform(self.originalFrame, scaleTransform);
+}
+
 
 @end

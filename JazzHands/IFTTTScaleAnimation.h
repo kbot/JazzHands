@@ -14,3 +14,7 @@
 - (void)addKeyframeForTime:(CGFloat)time scale:(CGFloat)scale withEasingFunction:(IFTTTEasingFunction)easingFunction;
 
 @end
+
+@interface IFTTTBasicScaleAnimation : IFTTTScaleAnimation
+
+@end
